@@ -6,7 +6,7 @@ name = "skkrfl6asevwuubvfioii3hlm"
 dynamic = ["version"]
 
 requires-python = ">= 3.14"
-dependencies = []
+dependencies = ["sqlmodel>=0.0.47,<0.0.48"]
 
 authors = [{name = "Jevan Goh", email = "javerngoh@gmail.com"}]
 
