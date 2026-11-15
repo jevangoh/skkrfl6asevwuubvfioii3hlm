@@ -1,4 +1,5 @@
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
+
 from .skkrfl6asevwuubvfioii3hlm import skkrfl6asevwuubvfioii3hlm as _
 
 try:
