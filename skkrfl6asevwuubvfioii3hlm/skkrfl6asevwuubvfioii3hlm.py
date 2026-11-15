@@ -50,7 +50,7 @@ class skkrfl6asevwuubvfioii3hlm(SqlModel):
         self._base_url = new_value
 
     def __init__(
-        self, *, id: Uuid | None = None, base_url: str | None = _unset, **data: Any
+        self, *, id: Uuid | None = None, base_url: str | None | _unset = _unset, **data: Any
     ) -> None:
         _init_kwargs_: dict[str, Any] = data.copy()
         if id is not None:
