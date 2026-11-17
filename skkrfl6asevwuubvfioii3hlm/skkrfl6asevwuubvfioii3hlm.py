@@ -9,11 +9,16 @@ from uuid import uuid4 as generate_uuid
 import sqlalchemy
 from pydantic import BeforeValidator, PlainSerializer, WithJsonSchema
 from pydantic import PrivateAttr as Private
+from PySide6.QtCore import QObject, Signal
 from sqlmodel import Field
 from sqlmodel import SQLModel as SqlModel
 
 type RequestId = Uuid
 _unset = sentinel("unset")
+
+
+class _DeletedSignal(QObject):
+    emitted = Signal()
 
 
 class skkrfl6asevwuubvfioii3hlm(SqlModel):
@@ -30,16 +35,11 @@ class skkrfl6asevwuubvfioii3hlm(SqlModel):
         WithJsonSchema({"type": str}),
     ] = Field(primary_key=True, sa_type=sqlalchemy.Uuid, default_factory=generate_uuid)
 
-    _active_requests: dict[RequestId, AwaitEvent] = Private(default_factory=dict)
     _base_url: str | None = Private(default=None)
 
-    @property
-    def active_requests(self) -> dict[RequestId, AwaitEvent]:
-        return self._active_requests
-
-    @active_requests.setter
-    def active_requests(self, new_value: dict[RequestId, AwaitEvent]) -> None:
-        self._active_requests = new_value
+    _deleted_signal: _DeletedSignal = Private(default_factory=_DeletedSignal)
+    _active_delete_request: AwaitEvent = Private(default_factory=AwaitEvent)
+    _active_requests: dict[RequestId, AwaitEvent] = Private(default_factory=dict)
 
     @property
     def base_url(self) -> str | None:
@@ -48,6 +48,18 @@ class skkrfl6asevwuubvfioii3hlm(SqlModel):
     @base_url.setter
     def base_url(self, new_value: str | None) -> None:
         self._base_url = new_value
+
+    @property
+    def deleted_signal(self) -> _DeletedSignal:
+        return self._deleted_signal
+
+    @property
+    def active_requests(self) -> dict[RequestId, AwaitEvent]:
+        return self._active_requests
+
+    @active_requests.setter
+    def active_requests(self, new_value: dict[RequestId, AwaitEvent]) -> None:
+        self._active_requests = new_value
 
     def __init__(
         self, *, id: Uuid | None = None, base_url: str | None | _unset = _unset, **data: Any
@@ -65,3 +77,6 @@ class skkrfl6asevwuubvfioii3hlm(SqlModel):
 
     def __hash__(self) -> int:
         return hash(self.id)
+
+    def delete(self) -> None:
+        pass

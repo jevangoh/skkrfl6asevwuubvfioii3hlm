@@ -90,6 +90,9 @@ create_readthedocs = "doppler run --token \"$AZU4V7WTFF38YLYNTQXQI0B7G\" -- pixi
 build_readthedocs_with_manual_secrets_injection = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/skkrfl6asevwuubvfioii3hlm/versions/main/builds/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\""
 build_readthedocs = "doppler run --token \"$AZU4V7WTFF38YLYNTQXQI0B7G\" -- pixi run build_readthedocs_with_manual_secrets_injection"
 
+[tool.pixi.dependencies]
+pyside6 = ">=6.11.3,<7"
+
 ######################################################################################################
 #                                                ruff                                                #
 ######################################################################################################
